@@ -1,0 +1,9 @@
+{
+  "name": "ChePaint",
+  "description": "Paint interactive real-time board",
+  "author": "Chepsilla",
+  "dependencies": {
+    "express": "4.x",
+    "socket.io": "^2.0.3"
+  }
+}
