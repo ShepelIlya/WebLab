@@ -8,7 +8,7 @@ var server =  http.createServer(app);
 var io = socketIo.listen(server);
 server.listen(8080);
 // add directory with our static files
-app.use(express.static('C:/WebShit/client'));
+app.use(express.static('C:/WebLab/client'));
 console.log("Server running on 127.0.0.1:8080");
 
 // array of all lines drawn
