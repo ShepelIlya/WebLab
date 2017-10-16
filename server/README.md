@@ -9,5 +9,6 @@
 |__socket.emit("draw_circle")__|*point1*, *radius*, *c*, *w* | Emitting two points for "circle" tool. *point1* is the center of a circle with *radius*.|
 |__socket.emit("eraser")__|*lines*| Emitting line array *lines* periodically. Used for "eraser" tool. Start- and end-point of each segment is used for **clearRect()** function and delete canvas within it.|
 _______
-|*c*| color information.|
-|*w*| width information.|
+
+*c* - color information.
+*w* - width information.
