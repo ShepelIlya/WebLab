@@ -10,5 +10,5 @@
 |__socket.emit("eraser")__|*lines*| Emitting line array *lines* periodically. Used for "eraser" tool. Start- and end-point of each segment is used for **clearRect()** function and delete canvas within it.|
 _______
 
-*c* - color information.
+*c* - color information.  
 *w* - width information.
