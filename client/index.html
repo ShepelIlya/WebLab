@@ -8,6 +8,29 @@
       <script src="client.js"></script>
    </head>
    <body>
-      <canvas id="drawing"></canvas>
+       <div class="controlPanel">
+           <div class="title">
+               ChePaint
+           </div>
+           <div id="brush" for="brush" class="tool">
+               <img data="brush" class="iconTool" src="./icons/brush.png" alt="">
+            </div>
+           <div id="line" for="line" class="tool">
+               <img data="line" class="iconTool" src="./icons/line.png" alt="">
+            </div>
+           <div id="rect" for="rect" class="tool">
+               <img data="rect" class="iconTool" src="./icons/brush.png" alt="">
+            </div>
+           <div id="circle" for="circle" class="tool">
+               <img data="circle" class="iconTool" src="./icons/brush.png" alt="">
+            </div>
+           <div id="eraser" for="eraser" class="tool">
+               <img data="eraser" class="iconTool" src="./icons/brush.png" alt="">
+            </div>
+       </div>
+       <div class="canvasBox">
+        <canvas id="drawingLayer" width="1000px" height="1000px"></canvas>
+        <canvas id="eventLayer" width="1000px" height="1000px"></canvas>        
+       </div>
    </body>
 </html>
