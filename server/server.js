@@ -4,60 +4,57 @@ http = require('http'),
 socketIo = require('socket.io');
 var fs = require('fs');
 
-// start webserver on port 8080
+// start server on port 8080
 var server =  http.createServer(app);
 var io = socketIo.listen(server);
 server.listen(8080);
-// add directory with our static files
-app.use(express.static('C:/WebLab/client'));
-console.log("Server running on 127.0.0.1:8080");
+
+var dir = __dirname.slice(0, -7)+'\\Client';
+app.use(express.static(dir));
+console.log("Server running on localhost:8080");
 
 var imageData = "";
 // event-handler for new incoming connections
 io.on('connection', function (socket) {
     
-    // first send the canvas data to the new client
-    socket.on('request', function (data) {
-        console.log("request");
-        console.log(imageData);
+    // send the canvas data to the new clients
+    socket.on('request_for_image_data', function (data) {
         io.emit('get_server_image_data', imageData);
     });
 
-    socket.on('post_server_image_data', function (data) {
-        console.log('post_server_image_data');
-        if (!data) {
-            console.log('imageData is empty');
-            return;
-        }
-        imageData = data;
-        var img = imageData.replace(/^data:image\/\w+;base64,/, "");
-        var buf = new Buffer(img, 'base64');
-        fs.writeFile('fileName.png', buf);
-        io.emit('get_server_image_data', imageData);
-    });
-
-    // add handler for message type "draw_line".
+    // handler for message type "draw_line"
     socket.on('draw_line', function (data) {
-        // вот тут короче в файл записываем
-        imageData = data.dataArray;
-        var img = imageData.replace(/^data:image\/\w+;base64,/, "");
-        var buf = new Buffer(img, 'base64');
-        fs.writeFile('fileName.png', buf);
+        imageData = data.imageCanvasData;
         // send line to all clients
-        io.emit('draw_line', { line: data.line, });
+        io.emit('draw_line', { line: data.line, c: data.c, w: data.w});
     });
 
-    socket.on('eraser', function (data) {
-        imageData = data.dataArray;
-        var img = imageData.replace(/^data:image\/\w+;base64,/, "");
-        var buf = new Buffer(img, 'base64');
-        fs.writeFile('fileName.png', buf);
-        // send line to all clients
-        io.emit('eraser', { line: data.line });
+    // handler for message type "draw_rect"
+    socket.on('draw_rect', function (point1, point2, c, w, imageCanvasData) {
+        imageData = imageCanvasData;
+        io.emit('draw_rect', { point1, point2, c, w });
     });
 
-    // socket.on('clear_server_data', function(){
-    //     imageData = '';
-    // });
+    // handler for message type "draw_circle"
+    socket.on('draw_circle', function (point1, point2, c, w, imageCanvasData) {
+        imageData = imageCanvasData;
+        io.emit('draw_circle', { point1, point2, c, w });
+    });
+
+    // handler for message type "draw_straight"
+    socket.on('draw_straight', function (point1, point2, c, w, imageCanvasData) {
+        imageData = imageCanvasData;
+        var data = {
+            line: [ point1, point2 ],
+            c: c,
+            w: w
+        }
+        io.emit('draw_straight', { line: data.line, c: data.c, w: data.w});
+    });
     
+    // handler for message type "eraser"
+    socket.on('eraser', function (data) {
+        imageData = data.imageCanvasData;
+        io.emit('eraser', { line: data.line, w: data.w });
+    });
 });

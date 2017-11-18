@@ -6,14 +6,35 @@ body, html{
    width: 100%;
    height: 100%;
 }
+.title {
+    /* position: absolute; */
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    height: 35px;
+    box-sizing: border-box;
+}
 .controlPanel {
     display: inline-block;
     position: absolute;
+    top: 75px;
+    text-align: center;
     width: 100px;
-    top: 0;
+}
+.canvasBox {
+    display: inline-block;
+    position: absolute;
+    left: 100px;
+    height: 1000px;
+    width: calc(100% - 100px);
 }
 #drawingLayer, #eventLayer {
+    display: inline-block;
+    border: 5px solid grey;
     position: absolute;
+    width: 1000px;
 }
 .iconTool, .tool {
     display: block;
@@ -21,15 +42,30 @@ body, html{
     width: 60px;
 }
 .tool {
+    display: inline-block;
     box-sizing: border-box;
+}
+.tool.current {
+    border: 2px solid black;
 }
 .inputTool {
     /* display: none; */
 }
-.canvasBox {
-    display: inline-block;
-    position: absolute;
-    left: 100px;
-    width: 1000px;
-    height: 1000px;
+#color {
+    margin-top: 30px;
+}
+.thicknessPanel {
+    margin-top: 30px;
+}
+.thickness {
+    text-align: left;
+    display: block;
+    box-sizing: border-box;
+    margin-left: 10px;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 5px;
+}
+.thicknessInput {
+    margin-left: 10px;
 }
